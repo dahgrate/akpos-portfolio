@@ -21,7 +21,7 @@ This portfolio was built with **React**, **Tailwind CSS**, **Framer Motion**, an
 
 ## 📸 Screenshot
 
-![Portfolio Screenshot](./screenshot.png)
+![Portfolio Screenshot](./akposworldss.png)
 
 ## 📄 Resume
 
