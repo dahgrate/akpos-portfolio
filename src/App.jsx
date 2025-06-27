@@ -3,15 +3,24 @@ import React from "react";
 export default function App() {
   return (
     <main className="min-h-screen bg-zinc-900 text-white font-sans">
-      <nav className="flex justify-between items-center p-6 border-b border-zinc-700">
-        <h1 className="text-xl font-bold">Akpos</h1>
-        <ul className="flex gap-6 text-sm">
-          <li><a href="#about" className="hover:text-emerald-400">About</a></li>
-          <li><a href="#projects" className="hover:text-emerald-400">Projects</a></li>
-          <li><a href="#contact" className="hover:text-emerald-400">Contact</a></li>
-          <li><a href="/Akpos_Resume.pdf" download className="bg-emerald-500 text-zinc-900 px-3 py-1 rounded hover:bg-emerald-400 font-medium">Download Resume</a></li>
-        </ul>
-      </nav>
+    <nav className="flex flex-col md:flex-row md:justify-between md:items-center p-6 border-b border-zinc-700">
+  <h1 className="text-xl font-bold mb-4 md:mb-0">Meet the Developer</h1>
+  <ul className="flex flex-col md:flex-row md:gap-6 gap-4 text-sm">
+    <li><a href="#about" className="hover:text-emerald-400">About</a></li>
+    <li><a href="#projects" className="hover:text-emerald-400">Projects</a></li>
+    <li><a href="#contact" className="hover:text-emerald-400">Contact</a></li>
+    <li>
+      <a
+        href="/Akpos_Resume.pdf"
+        download
+        className="bg-emerald-500 text-zinc-900 px-3 py-1 rounded hover:bg-emerald-400 font-medium inline-block text-center"
+      >
+        Download Resume
+      </a>
+    </li>
+  </ul>
+</nav>
+
 
       <section className="px-6 py-16 text-center">
         <h2 className="text-4xl font-bold mb-4">Hi, I'm Akpos</h2>
