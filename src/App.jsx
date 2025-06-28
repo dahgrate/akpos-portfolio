@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Home,
   User,
@@ -56,6 +56,18 @@ export default function App() {
 
   const tapEffect = { scale: 0.95, rotate: -2 };
 
+  const sidebarVariants = {
+    hidden: { x: "-100%", opacity: 0 },
+    visible: { x: 0, opacity: 1, transition: { type: "spring", stiffness: 70 } },
+    exit: { x: "-100%", opacity: 0, transition: { duration: 0.3 } },
+  };
+
+  const backdropVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 0.4, transition: { duration: 0.3 } },
+    exit: { opacity: 0, transition: { duration: 0.3 } },
+  };
+
   return (
     <main className="min-h-screen font-sans bg-[#F9FAFB] text-zinc-800 scroll-smooth relative overflow-hidden">
       <Ripple />
@@ -99,36 +111,51 @@ export default function App() {
         </button>
       </nav>
 
-      {isOpen && (
-        <motion.div
-          initial={{ height: 0 }}
-          animate={{ height: "auto" }}
-          className="md:hidden flex flex-col gap-4 p-4 bg-white border-b border-zinc-200 shadow"
-        >
-          {["home", "about", "tools", "projects"].map((item, idx) => (
-            <a
-              key={idx}
-              href={`#${item}`}
-              onClick={toggleMenu}
-              className="flex items-center gap-1"
+      {/* Sidebar with backdrop */}
+      <AnimatePresence>
+        {isOpen && (
+          <>
+            <motion.div
+              className="fixed inset-0 bg-black z-30"
+              variants={backdropVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              onClick={() => setIsOpen(false)}
+            />
+            <motion.div
+              variants={sidebarVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              className="fixed top-0 left-0 h-full w-64 bg-white shadow-lg flex flex-col gap-6 p-6 border-r border-zinc-200 z-40"
             >
-              {item === "home" && <Home size={16} />}
-              {item === "about" && <User size={16} />}
-              {item === "tools" && <Database size={16} />}
-              {item === "projects" && <Folder size={16} />}
-              {item.charAt(0).toUpperCase() + item.slice(1)}
-            </a>
-          ))}
-          <a
-            href="/Akpos_Resume.pdf"
-            download
-            onClick={toggleMenu}
-            className="flex items-center gap-1 bg-[#2DD4BF] text-white px-3 py-1 rounded hover:bg-[#7C3AED] font-medium"
-          >
-            <FileDown size={16} /> Download Resume
-          </a>
-        </motion.div>
-      )}
+              {["home", "about", "tools", "projects"].map((item, idx) => (
+                <a
+                  key={idx}
+                  href={`#${item}`}
+                  onClick={toggleMenu}
+                  className="flex items-center gap-2 text-lg text-zinc-800"
+                >
+                  {item === "home" && <Home size={20} />}
+                  {item === "about" && <User size={20} />}
+                  {item === "tools" && <Database size={20} />}
+                  {item === "projects" && <Folder size={20} />}
+                  {item.charAt(0).toUpperCase() + item.slice(1)}
+                </a>
+              ))}
+              <a
+                href="/Akpos_Resume.pdf"
+                download
+                onClick={toggleMenu}
+                className="flex items-center gap-2 bg-[#2DD4BF] text-white px-3 py-2 rounded hover:bg-[#7C3AED] font-medium"
+              >
+                <FileDown size={20} /> Download Resume
+              </a>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
 
       {/* HERO */}
       <motion.section
