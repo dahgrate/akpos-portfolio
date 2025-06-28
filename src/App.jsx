@@ -19,7 +19,6 @@ export default function App() {
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
-  // Update scrollTarget based on scroll position
   useEffect(() => {
     const handleScroll = () => {
       const toolsSection = document.getElementById("tools");
@@ -60,30 +59,6 @@ export default function App() {
   return (
     <main className="min-h-screen font-sans bg-[#F9FAFB] text-zinc-800 scroll-smooth relative overflow-hidden">
       <Ripple />
-
-      {/* Morphing Blob */}
-      <motion.div
-        className="absolute top-[-200px] left-[-200px] w-[600px] h-[600px] z-0 blur-3xl opacity-50 pointer-events-none"
-        animate={{
-          borderRadius: [
-            "20% 50% 30% 50%",
-            "50% 30% 50% 20%",
-            "30% 50% 20% 50%",
-            "50% 20% 50% 30%",
-          ],
-          background: [
-            "radial-gradient(circle at 30% 30%, #7C3AED, #2DD4BF)",
-            "radial-gradient(circle at 70% 30%, #2DD4BF, #FACC15)",
-            "radial-gradient(circle at 70% 70%, #FACC15, #3B82F6)",
-            "radial-gradient(circle at 30% 70%, #3B82F6, #7C3AED)",
-          ],
-        }}
-        transition={{
-          duration: 20,
-          repeat: Infinity,
-          repeatType: "loop",
-        }}
-      />
 
       {/* NAVBAR */}
       <nav className="p-6 flex justify-between items-center border-b border-zinc-200 bg-white shadow-sm relative z-10">
@@ -164,12 +139,11 @@ export default function App() {
         className="px-6 py-24 text-center relative z-10"
       >
         <motion.h2
-  variants={sectionFade}
-  className="text-5xl font-bold mb-4 text-zinc-900 typewriter inline-block"
->
-  Hi, I'm Akpos
-</motion.h2>
-
+          variants={sectionFade}
+          className="text-5xl font-bold mb-4 text-zinc-900 typewriter inline-block"
+        >
+          Hi, I'm Akpos
+        </motion.h2>
         <motion.p variants={sectionFade} className="text-lg text-zinc-600">
           Frontend Developer | Cybersecurity Enthusiast
         </motion.p>
@@ -261,7 +235,11 @@ export default function App() {
                 filter: `drop-shadow(0 0 12px ${shadow})`,
                 scale: 1.1,
               }}
-              whileTap={{ scale: 0.95 }}
+              whileTap={{
+                rotate: 360,
+                filter: `drop-shadow(0 0 12px ${shadow})`,
+                scale: 1.1,
+              }}
               className="inline-flex items-center justify-center w-16 h-16 rounded-full transition bg-white"
             >
               {icon}
@@ -369,7 +347,7 @@ export default function App() {
         &copy; {new Date().getFullYear()} AkposWorld. All rights reserved.
       </footer>
 
-      {/* Smart Back to Top/Bottom Arrow */}
+      {/* Smart Arrow ➤ */}
       <motion.a
         href={scrollTarget}
         className="fixed bottom-6 right-6 z-50 text-3xl text-[#2DD4BF] drop-shadow-lg"
