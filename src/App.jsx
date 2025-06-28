@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
   Home,
@@ -13,10 +13,29 @@ import {
 import { FaHtml5, FaCss3Alt, FaJsSquare, FaReact } from "react-icons/fa";
 import Ripple from "./Ripple";
 
-
 export default function App() {
   const [isOpen, setIsOpen] = useState(false);
+  const [scrollTarget, setScrollTarget] = useState("#contact");
+
   const toggleMenu = () => setIsOpen(!isOpen);
+
+  // Update scrollTarget based on scroll position
+  useEffect(() => {
+    const handleScroll = () => {
+      const toolsSection = document.getElementById("tools");
+      const toolsPosition = toolsSection?.offsetTop || 0;
+      const scrollY = window.scrollY || window.pageYOffset;
+
+      if (scrollY + window.innerHeight / 2 < toolsPosition) {
+        setScrollTarget("#contact");
+      } else {
+        setScrollTarget("#home");
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const sectionFade = {
     hidden: { opacity: 0, y: 40 },
@@ -27,18 +46,44 @@ export default function App() {
     },
   };
 
+  const iconFade = {
+    hidden: { opacity: 0, y: 30 },
+    visible: (i) => ({
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5, delay: i * 0.15 },
+    }),
+  };
+
   const tapEffect = { scale: 0.95, rotate: -2 };
 
   return (
     <main className="min-h-screen font-sans bg-[#F9FAFB] text-zinc-800 scroll-smooth relative overflow-hidden">
       <Ripple />
-     
 
-
-      {/* Background Particles */}
-      <div className="fixed inset-0 z-0 pointer-events-none">
-        <div className="particles"></div>
-      </div>
+      {/* Morphing Blob */}
+      <motion.div
+        className="absolute top-[-200px] left-[-200px] w-[600px] h-[600px] z-0 blur-3xl opacity-50 pointer-events-none"
+        animate={{
+          borderRadius: [
+            "20% 50% 30% 50%",
+            "50% 30% 50% 20%",
+            "30% 50% 20% 50%",
+            "50% 20% 50% 30%",
+          ],
+          background: [
+            "radial-gradient(circle at 30% 30%, #7C3AED, #2DD4BF)",
+            "radial-gradient(circle at 70% 30%, #2DD4BF, #FACC15)",
+            "radial-gradient(circle at 70% 70%, #FACC15, #3B82F6)",
+            "radial-gradient(circle at 30% 70%, #3B82F6, #7C3AED)",
+          ],
+        }}
+        transition={{
+          duration: 20,
+          repeat: Infinity,
+          repeatType: "loop",
+        }}
+      />
 
       {/* NAVBAR */}
       <nav className="p-6 flex justify-between items-center border-b border-zinc-200 bg-white shadow-sm relative z-10">
@@ -56,7 +101,9 @@ export default function App() {
               {item === "about" && <User size={16} />}
               {item === "tools" && <Database size={16} />}
               {item === "projects" && <Folder size={16} />}
-              <a href={`#${item}`}>{item.charAt(0).toUpperCase() + item.slice(1)}</a>
+              <a href={`#${item}`}>
+                {item.charAt(0).toUpperCase() + item.slice(1)}
+              </a>
             </motion.li>
           ))}
           <motion.li whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.9 }}>
@@ -117,11 +164,12 @@ export default function App() {
         className="px-6 py-24 text-center relative z-10"
       >
         <motion.h2
-          variants={sectionFade}
-          className="text-5xl font-bold mb-4 text-zinc-900 typewriter"
-        >
-          Hi, I'm Akpos
-        </motion.h2>
+  variants={sectionFade}
+  className="text-5xl font-bold mb-4 text-zinc-900 typewriter inline-block"
+>
+  Hi, I'm Akpos
+</motion.h2>
+
         <motion.p variants={sectionFade} className="text-lg text-zinc-600">
           Frontend Developer | Cybersecurity Enthusiast
         </motion.p>
@@ -136,11 +184,12 @@ export default function App() {
         viewport={{ once: false, amount: 0.4 }}
         whileHover={{
           scale: 1.02,
-          boxShadow: "0 0 20px rgba(124, 58, 237, 0.2), 0 0 40px rgba(45, 212, 191, 0.2)",
+          boxShadow:
+            "0 0 20px rgba(124, 58, 237, 0.2), 0 0 40px rgba(45, 212, 191, 0.2)",
           borderColor: "#2DD4BF",
         }}
         whileTap={{ scale: 0.98 }}
-        className="px-6 py-12 max-w-3xl mx-auto bg-white rounded-lg shadow border border-zinc-200 transition"
+        className="px-6 py-12 max-w-3xl mx-auto bg-white rounded-lg shadow border border-zinc-200 transition relative z-10"
       >
         <motion.h3
           variants={sectionFade}
@@ -149,7 +198,8 @@ export default function App() {
           About Me
         </motion.h3>
         <motion.p variants={sectionFade} className="text-zinc-700">
-          I build secure, modern web apps with React, Supabase, OWASP best practices, Wireshark & Burp Suite.
+          I build secure, modern web apps with React, Supabase, OWASP best
+          practices, Wireshark & Burp Suite.
         </motion.p>
       </motion.section>
 
@@ -160,7 +210,7 @@ export default function App() {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: false, amount: 0.4 }}
-        className="px-6 py-12 max-w-3xl mx-auto"
+        className="px-6 py-12 max-w-3xl mx-auto relative z-10"
       >
         <motion.h3
           variants={sectionFade}
@@ -168,10 +218,7 @@ export default function App() {
         >
           Tools & Stack
         </motion.h3>
-        <motion.div
-          variants={sectionFade}
-          className="flex flex-wrap gap-8 justify-center"
-        >
+        <div className="flex flex-wrap gap-8 justify-center">
           {[
             {
               icon: <FaHtml5 size={30} color="#E34F26" />,
@@ -204,6 +251,11 @@ export default function App() {
               href={href}
               target="_blank"
               rel="noreferrer"
+              custom={i}
+              variants={iconFade}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.3 }}
               whileHover={{
                 rotate: 360,
                 filter: `drop-shadow(0 0 12px ${shadow})`,
@@ -215,7 +267,7 @@ export default function App() {
               {icon}
             </motion.a>
           ))}
-        </motion.div>
+        </div>
       </motion.section>
 
       {/* PROJECTS */}
@@ -225,7 +277,7 @@ export default function App() {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: false, amount: 0.4 }}
-        className="px-6 py-12 max-w-3xl mx-auto bg-white rounded-lg shadow border border-zinc-200 mb-12"
+        className="px-6 py-12 max-w-3xl mx-auto bg-white rounded-lg shadow border border-zinc-200 mb-12 relative z-10"
       >
         <motion.h3
           variants={sectionFade}
@@ -236,7 +288,8 @@ export default function App() {
         <motion.div
           whileHover={{
             scale: 1.03,
-            boxShadow: "0 0 20px rgba(250, 204, 21, 0.4), 0 0 40px rgba(250, 204, 21, 0.4)",
+            boxShadow:
+              "0 0 20px rgba(250, 204, 21, 0.4), 0 0 40px rgba(250, 204, 21, 0.4)",
             borderColor: "#FACC15",
           }}
           transition={{ duration: 0.4 }}
@@ -244,7 +297,8 @@ export default function App() {
         >
           <h4 className="text-xl font-semibold">DuetDays App</h4>
           <p className="text-zinc-700 mt-2">
-            A productivity tracker built with React & Supabase. Includes user auth, real-time tasks, SEO indexing.
+            A productivity tracker built with React & Supabase. Includes user
+            auth, real-time tasks, SEO indexing.
           </p>
           <a
             href="https://preview--duet-days.lovable.app"
@@ -265,11 +319,12 @@ export default function App() {
         viewport={{ once: false, amount: 0.4 }}
         whileHover={{
           scale: 1.02,
-          boxShadow: "0 0 20px rgba(124, 58, 237, 0.2), 0 0 40px rgba(45, 212, 191, 0.2)",
+          boxShadow:
+            "0 0 20px rgba(124, 58, 237, 0.2), 0 0 40px rgba(45, 212, 191, 0.2)",
           borderColor: "#7C3AED",
         }}
         whileTap={{ scale: 0.98 }}
-        className="px-6 py-12 max-w-3xl mx-auto bg-white rounded-lg shadow border border-zinc-200 transition"
+        className="px-6 py-12 max-w-3xl mx-auto bg-white rounded-lg shadow border border-zinc-200 transition relative z-10"
       >
         <motion.h3
           variants={sectionFade}
@@ -313,6 +368,16 @@ export default function App() {
       <footer className="text-center text-sm text-zinc-500 py-6 border-t border-zinc-200">
         &copy; {new Date().getFullYear()} AkposWorld. All rights reserved.
       </footer>
+
+      {/* Smart Back to Top/Bottom Arrow */}
+      <motion.a
+        href={scrollTarget}
+        className="fixed bottom-6 right-6 z-50 text-3xl text-[#2DD4BF] drop-shadow-lg"
+        animate={{ rotate: 360 }}
+        transition={{ repeat: Infinity, duration: 2, ease: "linear" }}
+      >
+        ➤
+      </motion.a>
     </main>
   );
 }
