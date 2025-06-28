@@ -11,6 +11,7 @@ import {
   Database,
 } from "lucide-react";
 import { FaHtml5, FaCss3Alt, FaJsSquare, FaReact } from "react-icons/fa";
+import Ripple from "./Ripple";
 
 export default function App() {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,13 +19,35 @@ export default function App() {
 
   const sectionFade = {
     hidden: { opacity: 0, y: 40 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.8, staggerChildren: 0.2 } },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.8, staggerChildren: 0.2 },
+    },
   };
 
   const tapEffect = { scale: 0.95, rotate: -2 };
 
   return (
     <main className="min-h-screen font-sans bg-[#F9FAFB] text-zinc-800 scroll-smooth relative overflow-hidden">
+      <Ripple />
+      <div className="rubiks-cube">
+  <div className="cube">
+    <div className="face front"></div>
+    <div className="face back"></div>
+    <div className="face right"></div>
+    <div className="face left"></div>
+    <div className="face top"></div>
+    <div className="face bottom"></div>
+  </div>
+</div>
+
+
+      {/* Background Particles */}
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <div className="particles"></div>
+      </div>
+
       {/* NAVBAR */}
       <nav className="p-6 flex justify-between items-center border-b border-zinc-200 bg-white shadow-sm relative z-10">
         <h1 className="text-xl font-bold text-zinc-800">Meet the Developer</h1>
@@ -33,7 +56,7 @@ export default function App() {
           {["home", "about", "tools", "projects"].map((item, idx) => (
             <motion.li
               key={idx}
-              whileHover={{ scale: 1.1 }}
+              whileHover={{ scale: 1.1, color: "#2DD4BF" }}
               whileTap={tapEffect}
               className="flex items-center gap-1 hover:text-[#2DD4BF] transition"
             >
@@ -98,13 +121,12 @@ export default function App() {
         id="home"
         variants={sectionFade}
         initial="hidden"
-        whileInView="visible"
-        viewport={{ once: false, amount: 0.4 }}
-        className="px-6 py-24 text-center"
+        animate="visible"
+        className="px-6 py-24 text-center relative z-10"
       >
         <motion.h2
           variants={sectionFade}
-          className="text-5xl font-bold mb-4 text-zinc-900"
+          className="text-5xl font-bold mb-4 text-zinc-900 typewriter"
         >
           Hi, I'm Akpos
         </motion.h2>
@@ -161,47 +183,42 @@ export default function App() {
           {[
             {
               icon: <FaHtml5 size={30} color="#E34F26" />,
-              shadow: "rgba(227, 79, 38, 0)",
-              hoverShadow: "rgba(227, 79, 38, 0.6)",
+              shadow: "rgba(227, 79, 38, 0.6)",
               href: "https://developer.mozilla.org/en-US/docs/Web/HTML",
             },
             {
               icon: <FaCss3Alt size={30} color="#1572B6" />,
-              shadow: "rgba(21, 114, 182, 0)",
-              hoverShadow: "rgba(21, 114, 182, 0.6)",
+              shadow: "rgba(21, 114, 182, 0.6)",
               href: "https://developer.mozilla.org/en-US/docs/Web/CSS",
             },
             {
               icon: <FaJsSquare size={30} color="#F7DF1E" />,
-              shadow: "rgba(247, 223, 30, 0)",
-              hoverShadow: "rgba(247, 223, 30, 0.6)",
+              shadow: "rgba(247, 223, 30, 0.6)",
               href: "https://www.javascript.com/",
             },
             {
               icon: <FaReact size={30} color="#61DBFB" />,
-              shadow: "rgba(97, 219, 251, 0)",
-              hoverShadow: "rgba(97, 219, 251, 0.6)",
+              shadow: "rgba(97, 219, 251, 0.6)",
               href: "https://react.dev/",
             },
             {
               icon: <Database size={30} color="#2DD4BF" />,
-              shadow: "rgba(45, 212, 191, 0)",
-              hoverShadow: "rgba(45, 212, 191, 0.6)",
+              shadow: "rgba(45, 212, 191, 0.6)",
               href: "https://supabase.com/",
             },
-          ].map(({ icon, href, hoverShadow }, i) => (
+          ].map(({ icon, href, shadow }, i) => (
             <motion.a
               key={i}
               href={href}
               target="_blank"
               rel="noreferrer"
-              initial={{ filter: "none" }}
               whileHover={{
                 rotate: 360,
-                filter: `drop-shadow(0 0 10px ${hoverShadow})`,
+                filter: `drop-shadow(0 0 12px ${shadow})`,
+                scale: 1.1,
               }}
               whileTap={{ scale: 0.95 }}
-              className="relative inline-flex items-center justify-center w-16 h-16 rounded-full transition bg-white"
+              className="inline-flex items-center justify-center w-16 h-16 rounded-full transition bg-white"
             >
               {icon}
             </motion.a>
@@ -225,7 +242,11 @@ export default function App() {
           Projects
         </motion.h3>
         <motion.div
-          whileHover={{ scale: 1.03 }}
+          whileHover={{
+            scale: 1.03,
+            boxShadow: "0 0 20px rgba(250, 204, 21, 0.4), 0 0 40px rgba(250, 204, 21, 0.4)",
+            borderColor: "#FACC15",
+          }}
           transition={{ duration: 0.4 }}
           className="bg-[#F1F5F9] p-4 rounded shadow border border-zinc-200"
         >
