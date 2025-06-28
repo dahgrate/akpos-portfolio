@@ -13,6 +13,7 @@ import {
 import { FaHtml5, FaCss3Alt, FaJsSquare, FaReact } from "react-icons/fa";
 import Ripple from "./Ripple";
 
+
 export default function App() {
   const [isOpen, setIsOpen] = useState(false);
   const toggleMenu = () => setIsOpen(!isOpen);
@@ -31,16 +32,7 @@ export default function App() {
   return (
     <main className="min-h-screen font-sans bg-[#F9FAFB] text-zinc-800 scroll-smooth relative overflow-hidden">
       <Ripple />
-      <div className="rubiks-cube">
-  <div className="cube">
-    <div className="face front"></div>
-    <div className="face back"></div>
-    <div className="face right"></div>
-    <div className="face left"></div>
-    <div className="face top"></div>
-    <div className="face bottom"></div>
-  </div>
-</div>
+     
 
 
       {/* Background Particles */}
