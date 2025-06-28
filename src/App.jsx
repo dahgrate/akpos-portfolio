@@ -162,7 +162,12 @@ export default function App() {
             "0 0 20px rgba(124, 58, 237, 0.2), 0 0 40px rgba(45, 212, 191, 0.2)",
           borderColor: "#2DD4BF",
         }}
-        whileTap={{ scale: 0.98 }}
+        whileTap={{
+          scale: 1.02,
+          boxShadow:
+            "0 0 20px rgba(124, 58, 237, 0.2), 0 0 40px rgba(45, 212, 191, 0.2)",
+          borderColor: "#2DD4BF",
+        }}
         className="px-6 py-12 max-w-3xl mx-auto bg-white rounded-lg shadow border border-zinc-200 transition relative z-10"
       >
         <motion.h3
@@ -270,6 +275,12 @@ export default function App() {
               "0 0 20px rgba(250, 204, 21, 0.4), 0 0 40px rgba(250, 204, 21, 0.4)",
             borderColor: "#FACC15",
           }}
+          whileTap={{
+            scale: 1.03,
+            boxShadow:
+              "0 0 20px rgba(250, 204, 21, 0.4), 0 0 40px rgba(250, 204, 21, 0.4)",
+            borderColor: "#FACC15",
+          }}
           transition={{ duration: 0.4 }}
           className="bg-[#F1F5F9] p-4 rounded shadow border border-zinc-200"
         >
@@ -301,7 +312,12 @@ export default function App() {
             "0 0 20px rgba(124, 58, 237, 0.2), 0 0 40px rgba(45, 212, 191, 0.2)",
           borderColor: "#7C3AED",
         }}
-        whileTap={{ scale: 0.98 }}
+        whileTap={{
+          scale: 1.02,
+          boxShadow:
+            "0 0 20px rgba(124, 58, 237, 0.2), 0 0 40px rgba(45, 212, 191, 0.2)",
+          borderColor: "#7C3AED",
+        }}
         className="px-6 py-12 max-w-3xl mx-auto bg-white rounded-lg shadow border border-zinc-200 transition relative z-10"
       >
         <motion.h3
