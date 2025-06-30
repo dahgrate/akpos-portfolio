@@ -1,6 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap');
+
+
 
 html {
   scroll-behavior: smooth;
@@ -63,3 +67,15 @@ html {
 body {
   position: relative;
 }
+
+
+.pixel-pillars {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    #7C3AED 0,
+    #7C3AED 1px,
+    transparent 1px,
+    transparent 3px
+  );
+}
+
