@@ -22,21 +22,26 @@ export default function App() {
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const toolsSection = document.getElementById("tools");
-      const toolsPosition = toolsSection?.offsetTop || 0;
-      const scrollY = window.scrollY || window.pageYOffset;
+ useEffect(() => {
+  const handleScroll = () => {
+    const expertiseSection = document.getElementById("expertise");
+    const expertisePosition = expertiseSection?.offsetTop || 0;
+    const scrollY = window.scrollY || window.pageYOffset;
 
-      if (scrollY + window.innerHeight / 2 < toolsPosition) {
-        setScrollTarget("#contact");
-      } else {
-        setScrollTarget("#home");
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    // If we haven't scrolled PAST expertise, arrow goes down to #contact
+    if (scrollY + window.innerHeight / 2 < expertisePosition) {
+      setScrollTarget("#contact");
+    } else {
+      // If we are PAST expertise, arrow goes back to top (#home)
+      setScrollTarget("#home");
+    }
+  };
+
+  window.addEventListener("scroll", handleScroll);
+  return () => window.removeEventListener("scroll", handleScroll);
+}, []);
+
+
 
   const sectionFade = {
     hidden: { opacity: 0, y: 40 },
@@ -62,10 +67,10 @@ export default function App() {
   };
 
   const tools = [
-    { icon: <FaHtml5 size={30} color="#E34F26" />, label: "HTML5", desc: "I craft clean, accessible structure for modern, user-friendly websites." },
-    { icon: <FaCss3Alt size={30} color="#1572B6" />, label: "CSS3", desc: "I style interfaces with responsive, elegant, and engaging visuals." },
-    { icon: <FaJsSquare size={30} color="#F7DF1E" />, label: "JavaScript", desc: "I bring pages to life with dynamic, interactive features." },
-    { icon: <FaReact size={30} color="#61DBFB" />, label: "React", desc: "I build fast, scalable frontends with reusable components." },
+    { icon: <FaHtml5 size={30} color="#E34F26" />, label: "HTML5", desc: "I use HTML to craft clean, accessible structure for modern, user-friendly websites." },
+    { icon: <FaCss3Alt size={30} color="#1572B6" />, label: "CSS3", desc: "With the utilisation of CSS I am able to style interfaces with responsive, elegant, and engaging visuals." },
+    { icon: <FaJsSquare size={30} color="#F7DF1E" />, label: "JavaScript", desc: "Using JavaScipt, I bring pages to life with dynamic, interactive features." },
+    { icon: <FaReact size={30} color="#61DBFB" />, label: "React", desc: "React helps me I build fast, scalable frontends with reusable components." },
     { icon: <Zap size={30} color="#2DD4BF" />, label: "Supabase", desc: "I connect secure backends with real-time data and auth." },
   ];
 
@@ -89,7 +94,7 @@ export default function App() {
       <Ripple />
 
       {/* NAVBAR */}
-      <nav className="p-6 flex justify-between items-center border-b border-[#3F3A56] bg-[#3F3A56] shadow-sm relative z-10">
+      <nav className="p-6 flex justify-between items-center border-b border-[#282538] bg-[#282538] shadow-sm relative z-10">
         <h1 className="text-xl font-bold text-[#EDEDF2]">Meet the Developer</h1>
 
         <ul className="hidden md:flex gap-6 text-sm items-center">
@@ -143,7 +148,7 @@ export default function App() {
   initial="hidden"
   animate="visible"
   exit="exit"
-  className="fixed top-0 left-0 h-full w-64 bg-[#2A253A]/60 backdrop-blur-lg shadow-lg flex flex-col gap-6 p-6 border-r border-[#3F3A56] z-40 text-white"
+  className="fixed top-0 left-0 h-full w-64 bg-[#2A253A]/60 backdrop-blur-lg shadow-lg flex flex-col gap-6 p-6 border-r border-[#282538] z-40 text-white"
 >
 
   {["home", "about", "tools", "projects"].map((item, idx) => (
@@ -175,23 +180,36 @@ export default function App() {
       </AnimatePresence>
 
           {/* HERO */}
-           <motion.section
-             id="home"
-             variants={sectionFade}
-             initial="hidden"
-             animate="visible"
-             className="px-6 py-24 text-center relative z-10"
-           >
-             <motion.h2
-               variants={sectionFade}
-               className="text-5xl font-bold mb-4"
-             >
-               Hi, I'm Akpos
-             </motion.h2>
-             <motion.p variants={sectionFade} className="text-lg">
-               Frontend Developer | Cybersecurity Enthusiast
-             </motion.p>
-           </motion.section>
+<motion.section
+  id="home"
+  initial="hidden"
+  animate="visible"
+  className="relative px-6 py-48 text-center flex flex-col items-center justify-center bg-cover bg-center"
+  style={{
+    backgroundImage: "url('/hero.jpg')",
+  }}
+>
+  <div className="absolute inset-0 bg-black/40"></div>
+
+  <motion.h2
+    initial={{ width: 0 }}
+    animate={{ width: "fit-content" }}
+    transition={{ duration: 2, ease: "easeInOut" }}
+    className="text-5xl font-bold mb-4 overflow-hidden border-r-4 border-[#26b1a1] whitespace-nowrap relative text-[#EDEDF2]"
+  >
+    Hi, I'm Akpos
+  </motion.h2>
+
+  <motion.p
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ delay: 2, duration: 1 }}
+    className="text-lg relative text-[#EDEDF2]"
+  >
+    Frontend Developer | Cybersecurity Enthusiast
+  </motion.p>
+</motion.section>
+
 {/* ABOUT */}
 <motion.section
   id="about"
@@ -252,26 +270,26 @@ export default function App() {
         shadow: "rgba(227, 79, 38, 0.6)",
         border: "#E34F26",
         desc:
-          "I craft clean, accessible structure for modern, user-friendly websites.",
+          "I use HTML to craft clean, accessible structure for modern, user-friendly websites.",
       },
       {
         icon: <FaCss3Alt size={30} color="#1572B6" />,
         shadow: "rgba(21, 114, 182, 0.6)",
         border: "#1572B6",
         desc:
-          "I style interfaces with responsive, elegant, and engaging visuals.",
+          "With the utilisation of CSS I am able to style interfaces with responsive, elegant, and engaging visuals.",
       },
       {
         icon: <FaJsSquare size={30} color="#F7DF1E" />,
         shadow: "rgba(247, 223, 30, 0.6)",
         border: "#F7DF1E",
-        desc: "I bring pages to life with dynamic, interactive features.",
+        desc: "Using JavaScipt, I bring pages to life with dynamic, interactive features.",
       },
       {
         icon: <FaReact size={30} color="#61DBFB" />,
         shadow: "rgba(97, 219, 251, 0.6)",
         border: "#61DBFB",
-        desc: "I build fast, scalable frontends with reusable components.",
+        desc: "React helps me I build fast, scalable frontends with reusable components.",
       },
       {
         icon: <Database size={30} color="#2DD4BF" />,
@@ -317,9 +335,21 @@ export default function App() {
             animate={{
               opacity: 1,
               y: 0,
-              transition: { type: "spring", stiffness: 200 },
+              transition: {
+                type: "spring",
+                stiffness: 80,   // Lower stiffness = smoother
+                damping: 15,     // More damping = smoother stop
+                mass: 0.5,       // Lower mass for gentle effect
+              },
             }}
-            exit={{ opacity: 0, y: -20 }}
+            exit={{
+              opacity: 0,
+              y: -20,
+              transition: {
+                duration: 0.4,
+                ease: "easeInOut",
+              },
+            }}
             className="mt-2 relative px-4 py-2 text-sm bg-white/20 backdrop-blur-md rounded-lg shadow-lg font-raleway"
           >
             {/* Left pillar with your custom color */}
@@ -332,7 +362,6 @@ export default function App() {
     ))}
   </div>
 </motion.section>
-
 
 
 
@@ -434,22 +463,9 @@ export default function App() {
 {/* CONTACT */}
 <motion.section
   id="contact"
-  variants={sectionFade}
-  initial="hidden"
-  whileInView="visible"
-  viewport={{ once: false, amount: 0.4 }}
-  onClick={(e) => {
-    if (e.target.tagName !== "A") {
-      document.querySelectorAll("#contact a").forEach((el) => {
-        el.classList.add("animate-bounce");
-        setTimeout(() => el.classList.remove("animate-bounce"), 600);
-      });
-    }
-  }}
   className="px-6 py-12 max-w-3xl mx-auto bg-[#4A4460] rounded-lg shadow relative z-10 overflow-hidden"
 >
   {/* FRAME LINES */}
-
   <span className="absolute top-1/4 left-0 h-1/2 border-l-2 border-[#EDEDF2]"></span>
   <span className="absolute top-1/4 right-0 h-1/2 border-r-2 border-[#EDEDF2]"></span>
 
@@ -459,23 +475,54 @@ export default function App() {
   >
     Contact the Developer
   </motion.h3>
-  <div className="flex flex-col items-center gap-6">
-    {contactLinks.map((link, idx) => (
-      <motion.a
-        key={idx}
-        href={link.href}
-        target="_blank"
-        whileTap={{ scale: 1.2 }}
-        className="text-[#26b1a1] text-3xl"
-      >
-        {link.icon}
-      </motion.a>
-    ))}
-  </div>
+
+  <motion.div
+    className="flex flex-col items-center gap-6"
+    initial="hidden"
+    whileInView="visible"
+    viewport={{ once: false, amount: 0.4 }}
+    variants={{
+      visible: {
+        transition: {
+          staggerChildren: 0.2,
+        },
+      },
+    }}
+  >
+    {contactLinks.map((link, idx) => {
+      // Slide directions
+      let directionX = 50;
+      if (idx === 0 || idx === 2) {
+        directionX = -50;
+      }
+
+      // Ensure email link uses mailto:
+      const href = link.name === "Email"
+        ? "mailto:ogbontheakpos@gmail.com"
+        : link.href;
+
+      return (
+        <motion.a
+          key={idx}
+          href={href}
+          target="_blank"
+          onClick={(e) => e.stopPropagation()}
+          className="text-[#26b1a1] text-3xl"
+          variants={{
+            hidden: { opacity: 0, x: directionX },
+            visible: { opacity: 1, x: 0 },
+          }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
+          {link.icon}
+        </motion.a>
+      );
+    })}
+  </motion.div>
 </motion.section>
 
 
-     <footer className="text-center text-sm text-[#EDEDF2] py-6 border-t border-[#3F3A56] bg-[#3F3A56]">
+     <footer className="text-center text-sm text-[#EDEDF2] py-6 border-t border-[#282538] bg-[#282538]">
         &copy; {new Date().getFullYear()} AkposWorld. All rights reserved.
       </footer>
 
