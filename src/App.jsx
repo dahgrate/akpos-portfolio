@@ -229,7 +229,7 @@ export default function App() {
       "0 0 20px rgba(124, 58, 237, 0.2), 0 0 40px rgba(45, 212, 191, 0.2)",
     borderColor: "#2DD4BF",
   }}
-  className="relative px-6 py-12 max-w-3xl mx-auto bg-[#4A4460] rounded-lg shadow overflow-hidden transition z-10"
+  className="relative px-6 py-12 max-w-3xl mx-auto bg-[#3a354add] rounded-lg shadow overflow-hidden transition z-10"
 >
   {/* TOP & BOTTOM FRAME LINES */}
   <span className="absolute top-0 left-1/4 w-1/2 border-t-2 border-[#EDEDF2]"></span>
@@ -402,7 +402,7 @@ export default function App() {
   initial="hidden"
   whileInView="visible"
   viewport={{ once: false, amount: 0.4 }}
-  className="relative px-6 py-12 max-w-3xl mx-auto bg-[#4A4460] rounded-lg shadow mb-12 overflow-hidden z-10"
+  className="relative px-6 py-12 max-w-3xl mx-auto bg-[#3a354add] rounded-lg shadow mb-12 overflow-hidden z-10"
 >
   {/* CORNER LINES - perfectly hugging rounded edges */}
 
@@ -410,14 +410,7 @@ export default function App() {
   <span className="absolute top-0 left-0 w-12 h-0.5 bg-[#EDEDF2] rounded-full translate-x-2 translate-y-2"></span>
   <span className="absolute top-0 left-0 h-12 w-0.5 bg-[#EDEDF2] rounded-full translate-x-2 translate-y-2"></span>
 
-  {/* TOP RIGHT */}
-  <span className="absolute top-0 right-0 w-12 h-0.5 bg-[#EDEDF2] rounded-full -translate-x-2 translate-y-2"></span>
-  <span className="absolute top-0 right-0 h-12 w-0.5 bg-[#EDEDF2] rounded-full -translate-x-2 translate-y-2"></span>
-
-  {/* BOTTOM LEFT */}
-  <span className="absolute bottom-0 left-0 w-12 h-0.5 bg-[#EDEDF2] rounded-full translate-x-2 -translate-y-2"></span>
-  <span className="absolute bottom-0 left-0 h-12 w-0.5 bg-[#EDEDF2] rounded-full translate-x-2 -translate-y-2"></span>
-
+ 
   {/* BOTTOM RIGHT */}
   <span className="absolute bottom-0 right-0 w-12 h-0.5 bg-[#EDEDF2] rounded-full -translate-x-2 -translate-y-2"></span>
   <span className="absolute bottom-0 right-0 h-12 w-0.5 bg-[#EDEDF2] rounded-full -translate-x-2 -translate-y-2"></span>
@@ -463,7 +456,7 @@ export default function App() {
 {/* CONTACT */}
 <motion.section
   id="contact"
-  className="px-6 py-12 max-w-3xl mx-auto bg-[#4A4460] rounded-lg shadow relative z-10 overflow-hidden"
+  className="px-6 py-12 max-w-3xl mx-auto bg-[#3a354add] rounded-lg shadow relative z-10 overflow-hidden"
 >
   {/* FRAME LINES */}
   <span className="absolute top-1/4 left-0 h-1/2 border-l-2 border-[#EDEDF2]"></span>
