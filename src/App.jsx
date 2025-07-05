@@ -20,6 +20,22 @@ export default function App() {
   const [scrollTarget, setScrollTarget] = useState("#projects");
   const [toolDescription, setToolDescription] = useState(null);
  const [currentIndex, setCurrentIndex] = useState(1);
+const [touchStartX, setTouchStartX] = useState(0);
+
+const handleTouchStart = (e) => {
+  setTouchStartX(e.targetTouches[0].clientX);
+};
+
+const handleTouchEnd = (e) => {
+  const touchEndX = e.changedTouches[0].clientX;
+  const distance = touchStartX - touchEndX;
+
+  if (distance > 50) {
+    setCurrentIndex((prev) => (prev === 2 ? 0 : prev + 1));
+  } else if (distance < -50) {
+    setCurrentIndex((prev) => (prev === 0 ? 2 : prev - 1));
+  }
+};
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
@@ -468,18 +484,20 @@ export default function App() {
   </motion.h3>
 
   <div className="flex items-center justify-center gap-6 mb-8 relative">
-    {/* LEFT ARROW */}
     <button
       onClick={() =>
-        setCurrentIndex((prev) => (prev - 1 + 3) % 3)
+        setCurrentIndex((prev) => (prev === 0 ? 2 : prev - 1))
       }
       className="text-white text-3xl hover:text-[#26b1a1] transition"
     >
       {"<"}
     </button>
 
-    {/* SLIDER */}
-    <div className="w-full max-w-md overflow-hidden relative rounded-lg">
+    <div
+      className="w-full max-w-md overflow-hidden relative rounded-lg"
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+    >
       <div
         className="flex transition-transform duration-500 ease-in-out"
         style={{ transform: `translateX(-${currentIndex * 100}%)` }}
@@ -495,10 +513,9 @@ export default function App() {
       </div>
     </div>
 
-    {/* RIGHT ARROW */}
     <button
       onClick={() =>
-        setCurrentIndex((prev) => (prev + 1) % 3)
+        setCurrentIndex((prev) => (prev === 2 ? 0 : prev + 1))
       }
       className="text-white text-3xl hover:text-[#26b1a1] transition"
     >
