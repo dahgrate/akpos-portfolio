@@ -17,8 +17,9 @@ import Ripple from "./Ripple";
 
 export default function App() {
   const [isOpen, setIsOpen] = useState(false);
-  const [scrollTarget, setScrollTarget] = useState("#contact");
+  const [scrollTarget, setScrollTarget] = useState("#projects");
   const [toolDescription, setToolDescription] = useState(null);
+ const [currentIndex, setCurrentIndex] = useState(1);
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
@@ -30,7 +31,7 @@ export default function App() {
 
     // If we haven't scrolled PAST expertise, arrow goes down to #contact
     if (scrollY + window.innerHeight / 2 < expertisePosition) {
-      setScrollTarget("#contact");
+      setScrollTarget("#projects");
     } else {
       // If we are PAST expertise, arrow goes back to top (#home)
       setScrollTarget("#home");
@@ -178,8 +179,7 @@ export default function App() {
           </>
         )}
       </AnimatePresence>
-
-          {/* HERO */}
+{/* HERO */}
 <motion.section
   id="home"
   initial="hidden"
@@ -200,15 +200,65 @@ export default function App() {
     Hi, I'm Akpos
   </motion.h2>
 
+  {/* Added mb-12 for spacing below this line */}
   <motion.p
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
     transition={{ delay: 2, duration: 1 }}
-    className="text-lg relative text-[#EDEDF2]"
+    className="text-lg relative text-[#EDEDF2] mb-12"
   >
     Frontend Developer | Cybersecurity Enthusiast
   </motion.p>
+
+  {/* Floating Contact Icons with entrance */}
+  <motion.div className="flex gap-6">
+    {[
+      {
+        icon: <Mail size={20} color="#D14836" />,
+        href: "mailto:ogbontheakpos@gmail.com",
+        slideFrom: "top",
+      },
+      {
+        icon: <Github size={20} color="#FFFFFF" />,
+        href: "https://github.com/dahgrate",
+        slideFrom: "bottom",
+      },
+      {
+        icon: <Linkedin size={20} color="#0A66C2" />,
+        href: "https://www.linkedin.com/in/akpos-ogbon-3aa291351",
+        slideFrom: "top",
+      },
+      {
+        icon: <FaMedium size={22} color="#000000" />,
+        href: "https://medium.com/@dahgrate",
+        slideFrom: "bottom",
+      },
+    ].map((link, idx) => (
+      <motion.a
+        key={idx}
+        href={link.href}
+        target="_blank"
+        initial={{ opacity: 0, y: link.slideFrom === "top" ? -50 : 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1, ease: "easeOut" }}
+        viewport={{ once: false, amount: 0.4 }}
+        whileHover={{ scale: 1.1 }}
+      >
+        <motion.div
+          animate={{ y: [0, -5, 0] }}
+          transition={{
+            duration: 2,
+            ease: "easeInOut",
+            repeat: Infinity,
+          }}
+        >
+          {link.icon}
+        </motion.div>
+      </motion.a>
+    ))}
+  </motion.div>
 </motion.section>
+
 
 {/* ABOUT */}
 <motion.section
@@ -404,40 +454,77 @@ export default function App() {
   viewport={{ once: false, amount: 0.4 }}
   className="relative px-6 py-12 max-w-3xl mx-auto bg-[#3a354add] rounded-lg shadow mb-12 overflow-hidden z-10"
 >
-  {/* CORNER LINES - perfectly hugging rounded edges */}
-
-  {/* TOP LEFT */}
+  {/* CORNER LINES */}
   <span className="absolute top-0 left-0 w-12 h-0.5 bg-[#EDEDF2] rounded-full translate-x-2 translate-y-2"></span>
   <span className="absolute top-0 left-0 h-12 w-0.5 bg-[#EDEDF2] rounded-full translate-x-2 translate-y-2"></span>
-
- 
-  {/* BOTTOM RIGHT */}
   <span className="absolute bottom-0 right-0 w-12 h-0.5 bg-[#EDEDF2] rounded-full -translate-x-2 -translate-y-2"></span>
   <span className="absolute bottom-0 right-0 h-12 w-0.5 bg-[#EDEDF2] rounded-full -translate-x-2 -translate-y-2"></span>
 
   <motion.h3
     variants={sectionFade}
-    className="text-2xl font-semibold text-zinc-100 mb-4 text-center"
+    className="text-2xl font-semibold text-zinc-100 mb-8 text-center"
   >
     Projects
   </motion.h3>
+
+  <div className="flex items-center justify-center gap-6 mb-8 relative">
+    {/* LEFT ARROW */}
+    <button
+      onClick={() =>
+        setCurrentIndex((prev) => (prev - 1 + 3) % 3)
+      }
+      className="text-white text-3xl hover:text-[#26b1a1] transition"
+    >
+      {"<"}
+    </button>
+
+    {/* SLIDER */}
+    <div className="w-full max-w-md overflow-hidden relative rounded-lg">
+      <div
+        className="flex transition-transform duration-500 ease-in-out"
+        style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+      >
+        {[1, 2, 3].map((num) => (
+          <img
+            key={num}
+            src={`/dd${num}.png`}
+            alt={`DuetDays Mockup ${num}`}
+            className="w-full flex-shrink-0 rounded-lg object-cover"
+          />
+        ))}
+      </div>
+    </div>
+
+    {/* RIGHT ARROW */}
+    <button
+      onClick={() =>
+        setCurrentIndex((prev) => (prev + 1) % 3)
+      }
+      className="text-white text-3xl hover:text-[#26b1a1] transition"
+    >
+      {">"}
+    </button>
+  </div>
+
   <motion.div
     whileHover={{
-      scale: 1.03,
+      scale: 1.02,
       boxShadow:
         "0 0 20px rgba(38, 177, 161, 0.4), 0 0 40px rgba(38, 177, 161, 0.4)",
       borderColor: "#26b1a1",
     }}
     whileTap={{
-      scale: 1.03,
+      scale: 1.02,
       boxShadow:
         "0 0 20px rgba(38, 177, 161, 0.4), 0 0 40px rgba(38, 177, 161, 0.4)",
       borderColor: "#26b1a1",
     }}
     transition={{ duration: 0.4 }}
-    className="bg-[#5A5270] p-4 rounded shadow border border-zinc-200"
+    className="bg-[#5A5270] p-4 rounded text-center"
   >
-    <h4 className="text-xl font-semibold text-zinc-100">DuetDays App</h4>
+    <h4 className="text-xl font-semibold text-zinc-100">
+      DuetDays App
+    </h4>
     <p className="text-zinc-200 mt-2">
       A productivity tracker built with React & Supabase. Includes user
       auth, real-time tasks, SEO indexing.
@@ -452,72 +539,94 @@ export default function App() {
   </motion.div>
 </motion.section>
 
+<footer className="relative flex flex-col items-center justify-center px-8 py-12 border-t border-[#282538] bg-[#282538] text-[#EDEDF2]">
+  {/* Vertical Nav */}
+  <div className="flex flex-col items-center mb-8">
+    {["Home", "About", "Tools", "Projects"].map((tab, idx) => (
+      <React.Fragment key={idx}>
+        <a
+          href={`#${tab.toLowerCase()}`}
+          className="py-2 px-4 hover:text-[#26b1a1] transition"
+        >
+          {tab}
+        </a>
+        {idx < 3 && (
+          <div className="w-24 border-t border-[#EDEDF2] mx-auto"></div>
+        )}
+      </React.Fragment>
+    ))}
+  </div>
 
-{/* CONTACT */}
-<motion.section
-  id="contact"
-  className="px-6 py-12 max-w-3xl mx-auto bg-[#3a354add] rounded-lg shadow relative z-10 overflow-hidden"
->
-  {/* FRAME LINES */}
-  <span className="absolute top-1/4 left-0 h-1/2 border-l-2 border-[#EDEDF2]"></span>
-  <span className="absolute top-1/4 right-0 h-1/2 border-r-2 border-[#EDEDF2]"></span>
-
-  <motion.h3
-    variants={sectionFade}
-    className="text-2xl font-semibold mb-4 text-center text-zinc-100"
-  >
-    Contact the Developer
-  </motion.h3>
-
+  {/* Floating Contact Icons with entrance */}
   <motion.div
-    className="flex flex-col items-center gap-6"
+    className="flex gap-6 mb-8"
     initial="hidden"
     whileInView="visible"
-    viewport={{ once: false, amount: 0.4 }}
+    viewport={{ once: true, amount: 0.4 }}
     variants={{
       visible: {
-        transition: {
-          staggerChildren: 0.2,
-        },
+        transition: { staggerChildren: 0.2 },
       },
     }}
   >
-    {contactLinks.map((link, idx) => {
-      // Slide directions
-      let directionX = 50;
-      if (idx === 0 || idx === 2) {
-        directionX = -50;
-      }
+    {[
+  {
+    icon: <Mail size={20} color="#D14836" />,
+    href: "mailto:ogbontheakpos@gmail.com",
+    slideFrom: "top",
+  },
+  {
+    icon: <Github size={20} color="#FFFFFF" />,
+    href: "https://github.com/dahgrate",
+    slideFrom: "bottom",
+  },
+  {
+    icon: <Linkedin size={20} color="#0A66C2" />,
+    href: "https://www.linkedin.com/in/akpos-ogbon-3aa291351",
+    slideFrom: "top",
+  },
+  {
+    icon: <FaMedium size={22} color="#000000" />,
+    href: "https://medium.com/@dahgrate",
+    slideFrom: "bottom",
+  },
+].map((link, idx) => (
+  <motion.a
+    key={idx}
+    href={link.href}
+    target="_blank"
+    className="flex items-center justify-center w-10 h-10 rounded-full border-2 border-[#26b1a1] bg-[#282538]"
+    initial={{ opacity: 0, y: link.slideFrom === "top" ? -50 : 50 }}
+     whileInView={{ opacity: 1, y: 0 }}
+     transition={{ duration: 1, ease: "easeOut" }} // 👈 Smoother & slower
+    viewport={{ once: false, amount: 0.4 }}
+    whileHover={{ scale: 1.1 }}
+  >
+    <motion.div
+      animate={{
+        y: [0, -5, 0],
+      }}
+      transition={{
+        duration: 2,
+        ease: "easeInOut",
+        repeat: Infinity,
+      }}
+    >
+      {link.icon}
+    </motion.div>
+  </motion.a>
+))}
 
-      // Ensure email link uses mailto:
-      const href = link.name === "Email"
-        ? "mailto:ogbontheakpos@gmail.com"
-        : link.href;
-
-      return (
-        <motion.a
-          key={idx}
-          href={href}
-          target="_blank"
-          onClick={(e) => e.stopPropagation()}
-          className="text-[#26b1a1] text-3xl"
-          variants={{
-            hidden: { opacity: 0, x: directionX },
-            visible: { opacity: 1, x: 0 },
-          }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-        >
-          {link.icon}
-        </motion.a>
-      );
-    })}
   </motion.div>
-</motion.section>
+
+  {/* Copyright */}
+  <div className="text-center text-sm">
+    &copy; {new Date().getFullYear()} AkposWorld. All rights reserved.
+  </div>
+</footer>
 
 
-     <footer className="text-center text-sm text-[#EDEDF2] py-6 border-t border-[#282538] bg-[#282538]">
-        &copy; {new Date().getFullYear()} AkposWorld. All rights reserved.
-      </footer>
+
 
       <motion.a
         href={scrollTarget}

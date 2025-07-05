@@ -1,61 +1,80 @@
-<motion.section
-  id="contact"
-  variants={sectionFade}
-  initial="hidden"
-  whileInView="visible"
-  viewport={{ once: false, amount: 0.4 }}
-  onClick={(e) => {
-    if (e.target.tagName !== "A") {
-      document.querySelectorAll("#contact a").forEach((el) => {
-        el.classList.add("animate-bounce");
-        setTimeout(() => el.classList.remove("animate-bounce"), 600);
-      });
-    }
-  }}
-  className="relative px-6 py-12 max-w-3xl mx-auto rounded-lg shadow z-10 overflow-hidden"
->
-  {/* Corners */}
-  <span className="absolute top-0 left-0 w-12 border-t-2 border-[#EDEDF2]"></span>
-  <span className="absolute top-0 left-0 h-12 border-l-2 border-[#EDEDF2]"></span>
-
-  <span className="absolute top-0 right-0 w-12 border-t-2 border-[#EDEDF2]"></span>
-  <span className="absolute top-0 right-0 h-12 border-r-2 border-[#EDEDF2]"></span>
-
-  <span className="absolute bottom-0 left-0 w-12 border-b-2 border-[#EDEDF2]"></span>
-  <span className="absolute bottom-0 left-0 h-12 border-l-2 border-[#EDEDF2]"></span>
-
-  <span className="absolute bottom-0 right-0 w-12 border-b-2 border-[#EDEDF2]"></span>
-  <span className="absolute bottom-0 right-0 h-12 border-r-2 border-[#EDEDF2]"></span>
-
-  {/* Faded background pseudo-element */}
-  <div className="absolute inset-0 z-0"
-    style={{
-      background: "#4A4460",
-      maskImage: "radial-gradient(ellipse at center, white 85%, transparent 100%)",
-      WebkitMaskImage: "radial-gradient(ellipse at center, white 85%, transparent 100%)",
-    }}
-  />
-
-  {/* Actual content stays above */}
-  <div className="relative z-10">
-    <motion.h3
-      variants={sectionFade}
-      className="text-2xl font-semibold mb-4 text-center text-zinc-100"
-    >
-      Contact the Developer
-    </motion.h3>
-    <div className="flex flex-col items-center gap-6">
-      {contactLinks.map((link, idx) => (
-        <motion.a
-          key={idx}
-          href={link.href}
-          target="_blank"
-          whileTap={{ scale: 1.2 }}
-          className="text-[#26b1a1] text-3xl"
-        >
-          {link.icon}
-        </motion.a>
-      ))}
-    </div>
+<footer className="relative text-center text-sm text-[#EDEDF2] py-10 border-t border-[#282538] bg-[#282538]">
+  {/* Tabs */}
+  <div className="flex justify-center gap-8 mb-8">
+    {[
+      { name: "Home", href: "#home", icon: <Home size={16} /> },
+      { name: "About", href: "#about", icon: <User size={16} /> },
+      { name: "Tools", href: "#tools", icon: <Database size={16} /> },
+      { name: "Projects", href: "#projects", icon: <Folder size={16} /> },
+    ].map((tab, idx) => (
+      <motion.a
+        key={idx}
+        href={tab.href}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.95 }}
+        className="flex items-center gap-1 text-[#EDEDF2] hover:text-[#26b1a1] transition"
+      >
+        {tab.icon}
+        {tab.name}
+      </motion.a>
+    ))}
   </div>
-</motion.section>
+
+  {/* Contact Icons */}
+  <motion.div
+    className="flex justify-center gap-6"
+    initial="hidden"
+    whileInView="visible"
+    viewport={{ once: false, amount: 0.4 }}
+    variants={{
+      visible: {
+        transition: { staggerChildren: 0.2 },
+      },
+    }}
+  >
+    {[
+      {
+        icon: <Mail size={20} color="#D14836" />, // Gmail red
+        href: "mailto:ogbontheakpos@gmail.com",
+        slideFrom: "top",
+      },
+      {
+        icon: <Github size={20} color="#FFFFFF" />, // GitHub white
+        href: "https://github.com/dahgrate",
+        slideFrom: "bottom",
+      },
+      {
+        icon: <Linkedin size={20} color="#0A66C2" />, // LinkedIn blue
+        href: "https://www.linkedin.com/in/akpos-ogbon-3aa291351",
+        slideFrom: "top",
+      },
+      {
+        icon: <FaMedium size={22} color="#000000" />, // Medium black
+        href: "https://medium.com/@dahgrate",
+        slideFrom: "bottom",
+      },
+    ].map((link, idx) => (
+      <motion.a
+        key={idx}
+        href={link.href}
+        target="_blank"
+        onClick={(e) => e.stopPropagation()}
+        className="flex items-center justify-center w-10 h-10 rounded-full border-2 border-[#26b1a1] bg-[#282538] hover:scale-110 transition-transform"
+        variants={{
+          hidden: {
+            opacity: 0,
+            y: link.slideFrom === "top" ? -50 : 50,
+          },
+          visible: { opacity: 1, y: 0 },
+        }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+      >
+        {link.icon}
+      </motion.a>
+    ))}
+  </motion.div>
+
+  <div className="mt-8">
+    &copy; {new Date().getFullYear()} AkposWorld. All rights reserved.
+  </div>
+</footer>
