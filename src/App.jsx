@@ -19,22 +19,28 @@ export default function App() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrollTarget, setScrollTarget] = useState("#projects");
   const [toolDescription, setToolDescription] = useState(null);
- const [currentIndex, setCurrentIndex] = useState(1);
-const [touchStartX, setTouchStartX] = useState(0);
+ 
+const [currentIndex, setCurrentIndex] = useState(0);
+const [touchStartX, setTouchStartX] = useState(null);
 
 const handleTouchStart = (e) => {
-  setTouchStartX(e.targetTouches[0].clientX);
+  setTouchStartX(e.touches[0].clientX);
 };
 
 const handleTouchEnd = (e) => {
+  if (touchStartX === null) return;
   const touchEndX = e.changedTouches[0].clientX;
-  const distance = touchStartX - touchEndX;
+  const diffX = touchStartX - touchEndX;
 
-  if (distance > 50) {
+  if (diffX > 50) {
+    // Swipe Left = Next
     setCurrentIndex((prev) => (prev === 2 ? 0 : prev + 1));
-  } else if (distance < -50) {
+  } else if (diffX < -50) {
+    // Swipe Right = Prev
     setCurrentIndex((prev) => (prev === 0 ? 2 : prev - 1));
   }
+
+  setTouchStartX(null);
 };
 
   const toggleMenu = () => setIsOpen(!isOpen);
