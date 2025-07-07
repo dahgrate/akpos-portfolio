@@ -589,10 +589,12 @@ const handleTouchEnd = (e) => {
   {/* BACKGROUND IMAGE */}
   <div className="relative w-full">
     <img
-      src="/footer.jpg"
-      alt="Footer Background"
-      className="w-full h-full object-cover opacity-40"
-    />
+  src="/footer.jpg"
+  alt="Footer Background"
+  className="w-full h-full object-cover opacity-40 min-h-[550px] lg:h-[600px]"
+  style={{ zIndex: 0 }}
+/>
+
 
     {/* CONTENT with slide-up */}
     <motion.div
