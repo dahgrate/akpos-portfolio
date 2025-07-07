@@ -113,7 +113,7 @@ const handleTouchEnd = (e) => {
   ];
 
   return (
-    <main className="min-h-screen font-raleway bg-[#5C5470] text-[#EDEDF2] scroll-smooth relative overflow-hidden">
+    <main className="min-h-screen anton-regular bg-[#5C5470] text-[#EDEDF2] scroll-smooth relative overflow-hidden">
       <Ripple />
 
       {/* NAVBAR */}
@@ -206,13 +206,22 @@ const handleTouchEnd = (e) => {
   id="home"
   initial="hidden"
   animate="visible"
-  className="relative px-6 py-48 text-center flex flex-col items-center justify-center bg-cover bg-center"
-  style={{
-    backgroundImage: "url('/hero.jpg')",
-  }}
+  className="relative px-6 py-48 text-center flex flex-col items-center justify-center overflow-hidden"
 >
-  <div className="absolute inset-0 bg-black/40"></div>
+  {/* VIDEO BACKGROUND */}
+  <video
+    autoPlay
+    loop
+    muted
+    playsInline
+    className="absolute inset-0 w-full h-full object-cover"
+  >
+    <source src="/herovid.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
 
+  {/* Overlay for darkness */}
+  <div className="absolute inset-0 bg-black/40"></div>
   <motion.h2
     initial={{ width: 0 }}
     animate={{ width: "fit-content" }}
@@ -295,6 +304,13 @@ const handleTouchEnd = (e) => {
       "0 0 20px rgba(124, 58, 237, 0.2), 0 0 40px rgba(45, 212, 191, 0.2)",
     borderColor: "#2DD4BF",
   }}
+  style={{
+  backgroundImage: "url('/sectionsvg.png')",
+  backgroundRepeat: "no-repeat",
+  backgroundSize: "cover",
+  backgroundPosition: "center",
+}}
+
   whileTap={{
     scale: 1.02,
     boxShadow:
@@ -326,7 +342,7 @@ const handleTouchEnd = (e) => {
   initial="hidden"
   whileInView="visible"
   viewport={{ once: false, amount: 0.4 }}
-  className="px-6 py-12 max-w-3xl mx-auto relative z-10 font-raleway"
+  className="px-6 py-12 max-w-3xl mx-auto relative z-10 anton-regular"
 >
   <motion.h3
     variants={sectionFade}
@@ -370,7 +386,7 @@ const handleTouchEnd = (e) => {
         desc: "I connect secure backends with real-time data and auth.",
       },
     ].map(({ icon, shadow, border, desc }, i) => (
-      <motion.div key={i} className="flex flex-col items-center font-raleway">
+      <motion.div key={i} className="flex flex-col items-center anton-regular">
         <motion.a
           onClick={() => setToolDescription(i === toolDescription ? null : i)}
           whileHover={{
@@ -422,7 +438,7 @@ const handleTouchEnd = (e) => {
                 ease: "easeInOut",
               },
             }}
-            className="mt-2 relative px-4 py-2 text-sm bg-white/20 backdrop-blur-md rounded-lg shadow-lg font-raleway"
+            className="mt-2 relative px-4 py-2 text-sm bg-white/20 backdrop-blur-md rounded-lg shadow-lg anton-regular"
           >
             {/* Left pillar with your custom color */}
             <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#26b1a1] rounded" />
@@ -474,6 +490,13 @@ const handleTouchEnd = (e) => {
   initial="hidden"
   whileInView="visible"
   viewport={{ once: false, amount: 0.4 }}
+  style={{
+  backgroundImage: "url('/sectionsvg.png')",
+  backgroundRepeat: "no-repeat",
+  backgroundSize: "cover",
+  backgroundPosition: "center",
+}}
+
   className="relative px-6 py-12 max-w-3xl mx-auto bg-[#3a354add] rounded-lg shadow mb-12 overflow-hidden z-10"
 >
   {/* CORNER LINES */}
@@ -562,89 +585,110 @@ const handleTouchEnd = (e) => {
   </motion.div>
 </motion.section>
 
-<footer className="relative flex flex-col items-center justify-center px-8 py-12 border-t border-[#282538] bg-[#282538] text-[#EDEDF2]">
-  {/* Vertical Nav */}
-  <div className="flex flex-col items-center mb-8">
-    {["Home", "About", "Tools", "Projects"].map((tab, idx) => (
-      <React.Fragment key={idx}>
-        <a
-          href={`#${tab.toLowerCase()}`}
-          className="py-2 px-4 hover:text-[#26b1a1] transition"
-        >
-          {tab}
-        </a>
-        {idx < 3 && (
-          <div className="w-24 border-t border-[#EDEDF2] mx-auto"></div>
-        )}
-      </React.Fragment>
-    ))}
+<footer className="relative flex flex-col items-center justify-center overflow-hidden text-[#EDEDF2]">
+  {/* BACKGROUND IMAGE */}
+  <div className="relative w-full">
+    <img
+      src="/footer.jpg"
+      alt="Footer Background"
+      className="w-full h-full object-cover opacity-40"
+    />
+
+    {/* CONTENT with slide-up */}
+    <motion.div
+      className="absolute inset-0 flex flex-col items-center justify-center px-8 py-12"
+      initial={{ y: 100, opacity: 0 }}
+      whileInView={{ y: 0, opacity: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 1, ease: "easeOut" }}
+    >
+      {/* Vertical Nav */}
+      <div className="flex flex-col items-center mb-8">
+        {["Home", "About", "Tools", "Projects"].map((tab, idx) => (
+          <React.Fragment key={idx}>
+            <a
+              href={`#${tab.toLowerCase()}`}
+              className="py-2 px-4 hover:text-[#26b1a1] transition"
+            >
+              {tab}
+            </a>
+            {idx < 3 && (
+              <div className="w-32 border-t border-[#EDEDF2] mx-auto"></div>
+            )}
+          </React.Fragment>
+        ))}
+      </div>
+
+      {/* Floating Contact Icons */}
+      <motion.div
+        className="flex gap-6 mb-8"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.4 }}
+        variants={{
+          visible: {
+            transition: { staggerChildren: 0.2 },
+          },
+        }}
+      >
+        {[
+          {
+            icon: <Mail size={20} color="#D14836" />,
+            href: "mailto:ogbontheakpos@gmail.com",
+            slideFrom: "top",
+          },
+          {
+            icon: <Github size={20} color="#FFFFFF" />,
+            href: "https://github.com/dahgrate",
+            slideFrom: "bottom",
+          },
+          {
+            icon: <Linkedin size={20} color="#0A66C2" />,
+            href: "https://www.linkedin.com/in/akpos-ogbon-3aa291351",
+            slideFrom: "top",
+          },
+          {
+            icon: <FaMedium size={22} color="#000000" />,
+            href: "https://medium.com/@dahgrate",
+            slideFrom: "bottom",
+          },
+        ].map((link, idx) => (
+          <motion.a
+            key={idx}
+            href={link.href}
+            target="_blank"
+            className="flex items-center justify-center w-10 h-10 rounded-full border-2 border-[#26b1a1] "
+            initial={{ opacity: 0, y: link.slideFrom === "top" ? -50 : 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+            viewport={{ once: false, amount: 0.4 }}
+            whileHover={{ scale: 1.1 }}
+          >
+            <motion.div
+              animate={{
+                y: [0, -5, 0],
+              }}
+              transition={{
+                duration: 2,
+                ease: "easeInOut",
+                repeat: Infinity,
+              }}
+            >
+              {link.icon}
+            </motion.div>
+          </motion.a>
+        ))}
+      </motion.div>
+{/* ✅ COPYRIGHT ABOVE STRIP */}
+      <div className="text-center text-sm">
+        &copy; {new Date().getFullYear()} AkposWorld. All rights reserved.
+      </div>
+    </motion.div>
   </div>
 
-  {/* Floating Contact Icons with entrance */}
-  <motion.div
-    className="flex gap-6 mb-8"
-    initial="hidden"
-    whileInView="visible"
-    viewport={{ once: true, amount: 0.4 }}
-    variants={{
-      visible: {
-        transition: { staggerChildren: 0.2 },
-      },
-    }}
-  >
-    {[
-  {
-    icon: <Mail size={20} color="#D14836" />,
-    href: "mailto:ogbontheakpos@gmail.com",
-    slideFrom: "top",
-  },
-  {
-    icon: <Github size={20} color="#FFFFFF" />,
-    href: "https://github.com/dahgrate",
-    slideFrom: "bottom",
-  },
-  {
-    icon: <Linkedin size={20} color="#0A66C2" />,
-    href: "https://www.linkedin.com/in/akpos-ogbon-3aa291351",
-    slideFrom: "top",
-  },
-  {
-    icon: <FaMedium size={22} color="#000000" />,
-    href: "https://medium.com/@dahgrate",
-    slideFrom: "bottom",
-  },
-].map((link, idx) => (
-  <motion.a
-    key={idx}
-    href={link.href}
-    target="_blank"
-    className="flex items-center justify-center w-10 h-10 rounded-full border-2 border-[#26b1a1] bg-[#282538]"
-    initial={{ opacity: 0, y: link.slideFrom === "top" ? -50 : 50 }}
-     whileInView={{ opacity: 1, y: 0 }}
-     transition={{ duration: 1, ease: "easeOut" }} // 👈 Smoother & slower
-    viewport={{ once: false, amount: 0.4 }}
-    whileHover={{ scale: 1.1 }}
-  >
-    <motion.div
-      animate={{
-        y: [0, -5, 0],
-      }}
-      transition={{
-        duration: 2,
-        ease: "easeInOut",
-        repeat: Infinity,
-      }}
-    >
-      {link.icon}
-    </motion.div>
-  </motion.a>
-))}
-
-  </motion.div>
-
-  {/* Copyright */}
-  <div className="text-center text-sm">
-    &copy; {new Date().getFullYear()} AkposWorld. All rights reserved.
+  {/* ✅ THIN FINAL STRIP */}
+     
+  <div className="w-full text-center text-sm py-4 border-t border-[#282538] bg-[#282538]">
   </div>
 </footer>
 
