@@ -681,14 +681,14 @@ const handleTouchEnd = (e) => {
           </motion.a>
         ))}
       </motion.div>
-{/* ✅ COPYRIGHT ABOVE STRIP */}
+{/*  COPYRIGHT ABOVE STRIP */}
       <div className="text-center text-sm">
         &copy; {new Date().getFullYear()} AkposWorld. All rights reserved.
       </div>
     </motion.div>
   </div>
 
-  {/* ✅ THIN FINAL STRIP */}
+  {/* THIN FINAL STRIP */}
      
   <div className="w-full text-center text-sm py-4 border-t border-[#282538] bg-[#282538]">
   </div>
