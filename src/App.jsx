@@ -22,6 +22,22 @@ export default function App() {
  
 const [currentIndex, setCurrentIndex] = useState(0);
 const [touchStartX, setTouchStartX] = useState(null);
+const [time, setTime] = useState("");
+
+useEffect(() => {
+  const updateClock = () => {
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2, "0");
+    const minutes = String(now.getMinutes()).padStart(2, "0");
+    const seconds = String(now.getSeconds()).padStart(2, "0");
+    setTime(`${hours}:${minutes}:${seconds}`);
+  };
+
+  updateClock();
+  const interval = setInterval(updateClock, 1000);
+
+  return () => clearInterval(interval);
+}, []);
 
 const handleTouchStart = (e) => {
   setTouchStartX(e.touches[0].clientX);
@@ -585,16 +601,17 @@ const handleTouchEnd = (e) => {
   </motion.div>
 </motion.section>
 
+
+{/* FOOTER  */}
 <footer className="relative flex flex-col items-center justify-center overflow-hidden text-[#EDEDF2]">
   {/* BACKGROUND IMAGE */}
   <div className="relative w-full">
     <img
-  src="/footer.jpg"
-  alt="Footer Background"
-  className="w-full h-full object-cover opacity-40 min-h-[550px] lg:h-[600px]"
-  style={{ zIndex: 0 }}
-/>
-
+      src="/footer.jpg"
+      alt="Footer Background"
+      className="w-full h-full object-cover opacity-40 min-h-[550px] lg:h-[600px]"
+      style={{ zIndex: 0 }}
+    />
 
     {/* CONTENT with slide-up */}
     <motion.div
@@ -604,6 +621,11 @@ const handleTouchEnd = (e) => {
       viewport={{ once: true }}
       transition={{ duration: 1, ease: "easeOut" }}
     >
+            {/* CLOCK FIRST */}
+      <div className="text-center text-3xl font-bold mb-6">
+        {time}
+      </div>
+
       {/* Vertical Nav */}
       <div className="flex flex-col items-center mb-8">
         {["Home", "About", "Tools", "Projects"].map((tab, idx) => (
@@ -659,7 +681,7 @@ const handleTouchEnd = (e) => {
             key={idx}
             href={link.href}
             target="_blank"
-            className="flex items-center justify-center w-10 h-10 rounded-full border-2 border-[#26b1a1] "
+            className="flex items-center justify-center w-10 h-10 rounded-full border-2 border-[#26b1a1]"
             initial={{ opacity: 0, y: link.slideFrom === "top" ? -50 : 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: "easeOut" }}
@@ -681,17 +703,18 @@ const handleTouchEnd = (e) => {
           </motion.a>
         ))}
       </motion.div>
-{/*  COPYRIGHT ABOVE STRIP */}
+
+      {/* COPYRIGHT + CLOCK */}
       <div className="text-center text-sm">
         &copy; {new Date().getFullYear()} AkposWorld. All rights reserved.
+        <br />
+        
       </div>
     </motion.div>
   </div>
 
   {/* THIN FINAL STRIP */}
-     
-  <div className="w-full text-center text-sm py-4 border-t border-[#282538] bg-[#282538]">
-  </div>
+  <div className="w-full text-center text-sm py-4 border-t border-[#282538] bg-[#282538]"></div>
 </footer>
 
 
