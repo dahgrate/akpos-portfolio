@@ -26,13 +26,14 @@ const [time, setTime] = useState("");
 const [aboutInView, setAboutInView] = useState(false);
 const [projectsInView, setProjectsInView] = useState(false);
 const [expertiseInView, setExpertiseInView] = useState(false);
+const [toolsInView, setToolsInView] = useState(false);
 
 
 // ABOUT
 const typedAboutHeading = useTypingEffect("About Me", 80, aboutInView);
 const typedAboutContent = useTypingEffect(
   "I build secure, modern web apps with React, Supabase, OWASP best practices, Wireshark & Burp Suite.",
-  15,
+  6,
   aboutInView
 );
 
@@ -41,6 +42,9 @@ const typedProjectsHeading = useTypingEffect("Projects", 80, projectsInView);
 
 // EXPERTISE
 const typedExpertiseHeading = useTypingEffect("Expertise", 80, expertiseInView);
+
+// TOOLS
+const typedToolsHeading = useTypingEffect("Tools & Stack", 80, toolsInView)
 
 useEffect(() => {
   const updateClock = () => {
@@ -398,15 +402,16 @@ function useTypingEffect(text, speed = 50, active = true) {
   variants={sectionFade}
   initial="hidden"
   whileInView="visible"
+  onViewportEnter={() => setToolsInView(true)}
   viewport={{ once: false, amount: 0.4 }}
   className="px-6 py-12 max-w-3xl mx-auto relative z-10 anton-regular"
 >
-  <motion.h3
-    variants={sectionFade}
-    className="text-2xl font-semibold mb-4 text-center"
-  >
-    Tools & Stack
-  </motion.h3>
+ <motion.h3
+  variants={sectionFade}
+  className="text-2xl font-semibold text-zinc-100 mb-4 text-center"
+>
+  {typedToolsHeading}
+</motion.h3>
 
   <div className="flex flex-col gap-8 items-center">
     {[
