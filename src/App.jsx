@@ -23,6 +23,24 @@ export default function App() {
 const [currentIndex, setCurrentIndex] = useState(0);
 const [touchStartX, setTouchStartX] = useState(null);
 const [time, setTime] = useState("");
+const [aboutInView, setAboutInView] = useState(false);
+const [projectsInView, setProjectsInView] = useState(false);
+const [expertiseInView, setExpertiseInView] = useState(false);
+
+
+// ABOUT
+const typedAboutHeading = useTypingEffect("About Me", 80, aboutInView);
+const typedAboutContent = useTypingEffect(
+  "I build secure, modern web apps with React, Supabase, OWASP best practices, Wireshark & Burp Suite.",
+  15,
+  aboutInView
+);
+
+// PROJECTS
+const typedProjectsHeading = useTypingEffect("Projects", 80, projectsInView);
+
+// EXPERTISE
+const typedExpertiseHeading = useTypingEffect("Expertise", 80, expertiseInView);
 
 useEffect(() => {
   const updateClock = () => {
@@ -79,6 +97,28 @@ const handleTouchEnd = (e) => {
   window.addEventListener("scroll", handleScroll);
   return () => window.removeEventListener("scroll", handleScroll);
 }, []);
+
+function useTypingEffect(text, speed = 50, active = true) {
+  const [displayed, setDisplayed] = useState("");
+
+  useEffect(() => {
+    if (!active) {
+      setDisplayed("");
+      return;
+    }
+
+    let i = 0;
+    const interval = setInterval(() => {
+      setDisplayed(text.slice(0, i + 1));
+      i++;
+      if (i >= text.length) clearInterval(interval);
+    }, speed);
+
+    return () => clearInterval(interval);
+  }, [text, speed, active]);
+
+  return displayed;
+}
 
 
 
@@ -314,6 +354,7 @@ const handleTouchEnd = (e) => {
   initial="hidden"
   whileInView="visible"
   viewport={{ once: false, amount: 0.4 }}
+   onViewportEnter={() => setAboutInView(true)}
   whileHover={{
     scale: 1.02,
     boxShadow:
@@ -339,16 +380,16 @@ const handleTouchEnd = (e) => {
   <span className="absolute top-0 left-1/4 w-1/2 border-t-2 border-[#EDEDF2]"></span>
   <span className="absolute bottom-0 left-1/4 w-1/2 border-b-2 border-[#EDEDF2]"></span>
 
-  <motion.h3
-    variants={sectionFade}
-    className="text-2xl font-semibold text-zinc-100 mb-4 text-center"
-  >
-    About Me
-  </motion.h3>
-  <motion.p variants={sectionFade} className="text-zinc-200">
-    I build secure, modern web apps with React, Supabase, OWASP best
-    practices, Wireshark & Burp Suite.
-  </motion.p>
+ <motion.h3
+  variants={sectionFade}
+  className="text-2xl font-semibold text-zinc-100 mb-4 text-center"
+>
+  {typedAboutHeading}
+</motion.h3>
+<motion.p variants={sectionFade} className="text-zinc-200">
+  {typedAboutContent}
+</motion.p>
+
 </motion.section>
 
 {/* TOOLS */}
@@ -476,14 +517,17 @@ const handleTouchEnd = (e) => {
         variants={sectionFade}
         initial="hidden"
         whileInView="visible"
+        onViewportEnter={() => setExpertiseInView(true)}
         viewport={{ once: false, amount: 0.4 }}
         className="px-6 py-12 max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10"
       >
-          <motion.h3
-          variants={sectionFade}
- className="text-2xl font-semibold mb-4 text-center col-span-full"        >
-          Expertise
-        </motion.h3>
+         <motion.h3
+  variants={sectionFade}
+  className="text-2xl font-semibold mb-4 text-center col-span-full"
+>
+  {typedExpertiseHeading}
+</motion.h3>
+
         {expertiseList.map((exp, idx) => (
           <motion.div
             key={idx}
@@ -505,6 +549,7 @@ const handleTouchEnd = (e) => {
   variants={sectionFade}
   initial="hidden"
   whileInView="visible"
+   onViewportEnter={() => setProjectsInView(true)}
   viewport={{ once: false, amount: 0.4 }}
   style={{
   backgroundImage: "url('/sectionsvg.png')",
@@ -521,12 +566,13 @@ const handleTouchEnd = (e) => {
   <span className="absolute bottom-0 right-0 w-12 h-0.5 bg-[#EDEDF2] rounded-full -translate-x-2 -translate-y-2"></span>
   <span className="absolute bottom-0 right-0 h-12 w-0.5 bg-[#EDEDF2] rounded-full -translate-x-2 -translate-y-2"></span>
 
-  <motion.h3
-    variants={sectionFade}
-    className="text-2xl font-semibold text-zinc-100 mb-8 text-center"
-  >
-    Projects
-  </motion.h3>
+ <motion.h3
+  variants={sectionFade}
+  className="text-2xl font-semibold text-zinc-100 mb-8 text-center"
+>
+  {typedProjectsHeading}
+</motion.h3>
+
 
   <div className="flex items-center justify-center gap-6 mb-8 relative">
     <button
