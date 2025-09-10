@@ -298,7 +298,7 @@ function useTypingEffect(text, speed = 50, active = true) {
     transition={{ delay: 2, duration: 1 }}
     className="text-lg relative text-[#EDEDF2] mb-12"
   >
-    Frontend Developer | Cybersecurity Enthusiast
+    Full-Stack Developer | Cybersecurity Practitioner
   </motion.p>
 
   {/* Floating Contact Icons with entrance */}
