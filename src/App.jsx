@@ -199,7 +199,7 @@ function useTypingEffect(text, speed = 50, active = true) {
           ))}
           <motion.li whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.9 }}>
             <a
-              href="/Akpos_Resume.pdf"
+              href="/"
               download
               className="flex items-center gap-1 bg-[#26b1a1] text-white px-3 py-1 rounded hover:bg-[#7C3AED] font-medium transition"
             >
