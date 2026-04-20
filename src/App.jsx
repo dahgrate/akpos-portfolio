@@ -198,13 +198,7 @@ function useTypingEffect(text, speed = 50, active = true) {
             </motion.li>
           ))}
           <motion.li whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.9 }}>
-            <a
-              href="/"
-              download
-              className="flex items-center gap-1 bg-[#26b1a1] text-white px-3 py-1 rounded hover:bg-[#7C3AED] font-medium transition"
-            >
-              <FileDown size={16} /> Download Resume
-            </a>
+           
           </motion.li>
         </ul>
 
@@ -248,14 +242,7 @@ function useTypingEffect(text, speed = 50, active = true) {
       {item.charAt(0).toUpperCase() + item.slice(1)}
     </a>
   ))}
-  <a
-    href="/Akpos_Resume.pdf"
-    download
-    onClick={toggleMenu}
-    className="flex items-center gap-2 bg-[#26b1a1] text-white px-3 py-2 rounded hover:bg-[#7C3AED] font-medium"
-  >
-    <FileDown size={20} /> Download Resume
-  </a>
+
 </motion.div>
 
           </>
