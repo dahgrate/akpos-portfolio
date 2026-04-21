@@ -23,9 +23,6 @@ This portfolio was built with **React**, **Tailwind CSS**, **Framer Motion**, an
 
 ![Portfolio Screenshot](./akposworldss.png)
 
-## 📄 Resume
-
-My resume is downloadable directly from the site.
 
 ## 🔗 Contact
 
