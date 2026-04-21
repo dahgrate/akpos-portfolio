@@ -43,7 +43,7 @@ export default function Hero(props){
     transition={{ delay: 2, duration: 1 }}
     className="text-lg relative text-[#EDEDF2] mb-12"
   >
-    Full-Stack Developer | Cybersecurity Practitioner
+    Full-Stack Developer | Certified Cybersecurity Practitioner
   </motion.p>
 
   {/* Floating Contact Icons with entrance */}

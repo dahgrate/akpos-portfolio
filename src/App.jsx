@@ -155,7 +155,6 @@ function useTypingEffect(text, speed = 50, active = true) {
 
 return (
 <>
-
 <Ripple />
 
 <main className="min-h-screen anton-regular bg-[#5C5470] text-[#EDEDF2] scroll-smooth relative overflow-hidden">
@@ -206,6 +205,5 @@ setCurrentIndex={setCurrentIndex}
 </main>
 
 <ScrollArrow scrollTarget={scrollTarget}/>
-
 </>
 );}
